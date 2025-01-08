@@ -14,7 +14,7 @@ jobs:  # we are creating jobs to perform steps
         node-version: '20'
 
     - name: checkout git repo code to vm
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: verify code in vm
       run: ls
