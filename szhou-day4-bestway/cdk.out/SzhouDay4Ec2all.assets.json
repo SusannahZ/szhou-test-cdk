@@ -1,0 +1,20 @@
+{
+  "version": "36.0.0",
+  "files": {
+    "09e80c74c6ab56ba10337a79e5fea1e9a31434ed87e2c26311de3006910a0f5c": {
+      "source": {
+        "path": "SzhouDay4Ec2all.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "992382386705-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-992382386705-us-east-1",
+          "objectKey": "09e80c74c6ab56ba10337a79e5fea1e9a31434ed87e2c26311de3006910a0f5c.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::992382386705:role/cdk-hnb659fds-file-publishing-role-992382386705-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
