@@ -1,0 +1,442 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "SzhouVpcEc2Day5Stack": {
+        "id": "SzhouVpcEc2Day5Stack",
+        "path": "SzhouVpcEc2Day5Stack",
+        "children": {
+          "SzhouVpc": {
+            "id": "SzhouVpc",
+            "path": "SzhouVpcEc2Day5Stack/SzhouVpc",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "SzhouVpcEc2Day5Stack/SzhouVpc/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
+                  "aws:cdk:cloudformation:props": {
+                    "cidrBlock": "10.5.0.0/24",
+                    "enableDnsHostnames": true,
+                    "enableDnsSupport": true,
+                    "instanceTenancy": "default",
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "szhou-vpc"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnVPC",
+                  "version": "2.151.0"
+                }
+              },
+              "szhou-public-subnetSubnet1": {
+                "id": "szhou-public-subnetSubnet1",
+                "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet1",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet1/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            0,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "cidrBlock": "10.5.0.0/28",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "szhou-public-subnet"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "SzhouVpcB4259142"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.151.0"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet1/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.151.0"
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet1/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "SzhouVpcB4259142"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.151.0"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet1/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "SzhouVpcszhoupublicsubnetSubnet1RouteTable2F7D7538"
+                        },
+                        "subnetId": {
+                          "Ref": "SzhouVpcszhoupublicsubnetSubnet1SubnetB19A4CE2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.151.0"
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet1/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "SzhouVpcIGW7CE674B4"
+                        },
+                        "routeTableId": {
+                          "Ref": "SzhouVpcszhoupublicsubnetSubnet1RouteTable2F7D7538"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
+                      "version": "2.151.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PublicSubnet",
+                  "version": "2.151.0"
+                }
+              },
+              "szhou-public-subnetSubnet2": {
+                "id": "szhou-public-subnetSubnet2",
+                "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet2",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet2/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            1,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "cidrBlock": "10.5.0.16/28",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "szhou-public-subnet"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "SzhouVpcB4259142"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.151.0"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet2/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.151.0"
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet2/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "SzhouVpcB4259142"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.151.0"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet2/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "SzhouVpcszhoupublicsubnetSubnet2RouteTable58A5546B"
+                        },
+                        "subnetId": {
+                          "Ref": "SzhouVpcszhoupublicsubnetSubnet2SubnetAABB0A7F"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.151.0"
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/szhou-public-subnetSubnet2/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "SzhouVpcIGW7CE674B4"
+                        },
+                        "routeTableId": {
+                          "Ref": "SzhouVpcszhoupublicsubnetSubnet2RouteTable58A5546B"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
+                      "version": "2.151.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PublicSubnet",
+                  "version": "2.151.0"
+                }
+              },
+              "IGW": {
+                "id": "IGW",
+                "path": "SzhouVpcEc2Day5Stack/SzhouVpc/IGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::InternetGateway",
+                  "aws:cdk:cloudformation:props": {
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "szhou-vpc"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnInternetGateway",
+                  "version": "2.151.0"
+                }
+              },
+              "VPCGW": {
+                "id": "VPCGW",
+                "path": "SzhouVpcEc2Day5Stack/SzhouVpc/VPCGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPCGatewayAttachment",
+                  "aws:cdk:cloudformation:props": {
+                    "internetGatewayId": {
+                      "Ref": "SzhouVpcIGW7CE674B4"
+                    },
+                    "vpcId": {
+                      "Ref": "SzhouVpcB4259142"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnVPCGatewayAttachment",
+                  "version": "2.151.0"
+                }
+              },
+              "RestrictDefaultSecurityGroupCustomResource": {
+                "id": "RestrictDefaultSecurityGroupCustomResource",
+                "path": "SzhouVpcEc2Day5Stack/SzhouVpc/RestrictDefaultSecurityGroupCustomResource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "SzhouVpcEc2Day5Stack/SzhouVpc/RestrictDefaultSecurityGroupCustomResource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.151.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.151.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ec2.Vpc",
+              "version": "2.151.0"
+            }
+          },
+          "LatestNodeRuntimeMap": {
+            "id": "LatestNodeRuntimeMap",
+            "path": "SzhouVpcEc2Day5Stack/LatestNodeRuntimeMap",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnMapping",
+              "version": "2.151.0"
+            }
+          },
+          "Custom::VpcRestrictDefaultSGCustomResourceProvider": {
+            "id": "Custom::VpcRestrictDefaultSGCustomResourceProvider",
+            "path": "SzhouVpcEc2Day5Stack/Custom::VpcRestrictDefaultSGCustomResourceProvider",
+            "children": {
+              "Staging": {
+                "id": "Staging",
+                "path": "SzhouVpcEc2Day5Stack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Staging",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.AssetStaging",
+                  "version": "2.151.0"
+                }
+              },
+              "Role": {
+                "id": "Role",
+                "path": "SzhouVpcEc2Day5Stack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.151.0"
+                }
+              },
+              "Handler": {
+                "id": "Handler",
+                "path": "SzhouVpcEc2Day5Stack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.151.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CustomResourceProviderBase",
+              "version": "2.151.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "SzhouVpcEc2Day5Stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "SzhouVpcEc2Day5Stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.151.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "SzhouVpcEc2Day5Stack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.151.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.2"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "SzhouVpcEc2Day5Stack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.151.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "SzhouVpcEc2Day5Stack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.151.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.151.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.4.2"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.151.0"
+    }
+  }
+}

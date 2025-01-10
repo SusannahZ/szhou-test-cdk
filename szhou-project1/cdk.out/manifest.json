@@ -1,0 +1,115 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "SzhouProject1Stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "SzhouProject1Stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "SzhouProject1Stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "SzhouProject1Stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/02f3cf9904aaefb2cbcf15095ec336c98ebaa370549a81eb013a91fd4d702233.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "SzhouProject1Stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "SzhouProject1Stack.assets"
+      ],
+      "metadata": {
+        "/SzhouProject1Stack/SzhouSampleFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SzhouSampleFunctionServiceRole800ADB68"
+          }
+        ],
+        "/SzhouProject1Stack/SzhouSampleFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SzhouSampleFunctionServiceRoleDefaultPolicy35F00E77"
+          }
+        ],
+        "/SzhouProject1Stack/SzhouSampleFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SzhouSampleFunction542F628A"
+          }
+        ],
+        "/SzhouProject1Stack/Rule/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Rule4C995B7F"
+          }
+        ],
+        "/SzhouProject1Stack/Rule/AllowEventRuleSzhouProject1StackSzhouSampleFunction3E573EE6": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RuleAllowEventRuleSzhouProject1StackSzhouSampleFunction3E573EE6EC21B4E5"
+          }
+        ],
+        "/SzhouProject1Stack/SzhouDynamoDB": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "SzhouDynamoDB47B077F1"
+            }
+          }
+        ],
+        "/SzhouProject1Stack/SzhouDynamoDB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SzhouDynamoDB47B077F1"
+          }
+        ],
+        "/SzhouProject1Stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/SzhouProject1Stack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/SzhouProject1Stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/SzhouProject1Stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "SzhouProject1Stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

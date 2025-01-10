@@ -1,0 +1,77 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "SzhouDay4LambdaStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "SzhouDay4LambdaStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "SzhouDay4LambdaStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://992382386705/us-east-1",
+      "properties": {
+        "templateFile": "SzhouDay4LambdaStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::992382386705:role/cdk-hnb659fds-deploy-role-992382386705-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::992382386705:role/cdk-hnb659fds-cfn-exec-role-992382386705-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-992382386705-us-east-1/4b4111713e4836e9f569d1f1b6769e98b503f2e4abd8808032d9fb35315ad3f5.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "SzhouDay4LambdaStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::992382386705:role/cdk-hnb659fds-lookup-role-992382386705-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "SzhouDay4LambdaStack.assets"
+      ],
+      "metadata": {
+        "/SzhouDay4LambdaStack/HelloWorldFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HelloWorldFunctionServiceRole8E0BD458"
+          }
+        ],
+        "/SzhouDay4LambdaStack/HelloWorldFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HelloWorldFunctionB2AB6E79"
+          }
+        ],
+        "/SzhouDay4LambdaStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/SzhouDay4LambdaStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/SzhouDay4LambdaStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "SzhouDay4LambdaStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

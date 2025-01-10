@@ -1,0 +1,20 @@
+{
+  "version": "36.0.0",
+  "files": {
+    "4b4111713e4836e9f569d1f1b6769e98b503f2e4abd8808032d9fb35315ad3f5": {
+      "source": {
+        "path": "SzhouDay4LambdaStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "992382386705-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-992382386705-us-east-1",
+          "objectKey": "4b4111713e4836e9f569d1f1b6769e98b503f2e4abd8808032d9fb35315ad3f5.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::992382386705:role/cdk-hnb659fds-file-publishing-role-992382386705-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

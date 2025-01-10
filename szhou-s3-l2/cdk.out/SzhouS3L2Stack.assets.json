@@ -1,0 +1,19 @@
+{
+  "version": "36.0.0",
+  "files": {
+    "28a1a359dc8715aa1c9b434a41b732ea8f15fd0d408036263e5ac5942d552cad": {
+      "source": {
+        "path": "SzhouS3L2Stack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "28a1a359dc8715aa1c9b434a41b732ea8f15fd0d408036263e5ac5942d552cad.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

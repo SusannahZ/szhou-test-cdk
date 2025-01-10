@@ -1,0 +1,420 @@
+{
+ "Resources": {
+  "SzhouSampleFunctionServiceRole800ADB68": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SzhouProject1Stack/SzhouSampleFunction/ServiceRole/Resource"
+   }
+  },
+  "SzhouSampleFunctionServiceRoleDefaultPolicy35F00E77": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:ListAllMyBuckets",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "dynamodb:PutItem",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "SzhouDynamoDB47B077F1",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "SzhouSampleFunctionServiceRoleDefaultPolicy35F00E77",
+    "Roles": [
+     {
+      "Ref": "SzhouSampleFunctionServiceRole800ADB68"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SzhouProject1Stack/SzhouSampleFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "SzhouSampleFunction542F628A": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ZipFile": "\nimport time \nimport boto3\ndynamodb = boto3.resource('dynamodb')\ntable = dynamodb.Table('szhou-table')\ndef handler(event, context):\n    s3 = boto3.client('s3')\n    response = s3.list_buckets()\n    buckets = [bucket['Name'] for bucket in response['Buckets']]\n    print(\"S3 Buckets:\", buckets)\n    \n    for bucket in buckets:\n      table.put_item(Item={'BucketName': bucket})\n    \n    return {\n      'statusCode': 200,\n      'body': 'S3 Buckets: ' + ', '.join(buckets)\n    }  \n      "
+    },
+    "FunctionName": "szhou-sample-function",
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "SzhouSampleFunctionServiceRole800ADB68",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.9"
+   },
+   "DependsOn": [
+    "SzhouSampleFunctionServiceRoleDefaultPolicy35F00E77",
+    "SzhouSampleFunctionServiceRole800ADB68"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SzhouProject1Stack/SzhouSampleFunction/Resource"
+   }
+  },
+  "Rule4C995B7F": {
+   "Type": "AWS::Events::Rule",
+   "Properties": {
+    "ScheduleExpression": "rate(3 minutes)",
+    "State": "ENABLED",
+    "Targets": [
+     {
+      "Arn": {
+       "Fn::GetAtt": [
+        "SzhouSampleFunction542F628A",
+        "Arn"
+       ]
+      },
+      "Id": "Target0"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SzhouProject1Stack/Rule/Resource"
+   }
+  },
+  "RuleAllowEventRuleSzhouProject1StackSzhouSampleFunction3E573EE6EC21B4E5": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "SzhouSampleFunction542F628A",
+      "Arn"
+     ]
+    },
+    "Principal": "events.amazonaws.com",
+    "SourceArn": {
+     "Fn::GetAtt": [
+      "Rule4C995B7F",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SzhouProject1Stack/Rule/AllowEventRuleSzhouProject1StackSzhouSampleFunction3E573EE6"
+   }
+  },
+  "SzhouDynamoDB47B077F1": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "BucketName",
+      "AttributeType": "S"
+     }
+    ],
+    "KeySchema": [
+     {
+      "AttributeName": "BucketName",
+      "KeyType": "HASH"
+     }
+    ],
+    "ProvisionedThroughput": {
+     "ReadCapacityUnits": 5,
+     "WriteCapacityUnits": 5
+    },
+    "TableName": "szhou-table"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SzhouProject1Stack/SzhouDynamoDB/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02NywqDMBBFv6X7OFWh/QGha0m7L3kVRpMJmESRkH8vjV24OgfugdtDd+ugvYgtNErPjUUJ+RmFmpnYwjtb4aQWkB+JVERPbPjQ2UezOAwBPRWGwkHm3prfUDl6i2qvXbXCzGooBsg8/bNkTWF6J+G8lpBfQh5DlVIYN8GnRR3xyQdPGmP9Ja8NTOG69i10d2gvU0BslkQRnQF+8AsKwCf46QAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "SzhouProject1Stack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
