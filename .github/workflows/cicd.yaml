@@ -2,7 +2,7 @@ name: Deploy Stack on aws by using creds
 on: 
   push:
     branches:
-      - main  # when ever any code to pushed to main branch, it will trigger the pipeline
+      - mainn  # when ever any code to pushed to main branch, it will trigger the pipeline
 
 jobs:  # we are creating jobs to perform steps
   s3-deploy:
