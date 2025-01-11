@@ -34,7 +34,7 @@ def handler(event, context):
     return {
       'statusCode': 200,
       'body': 'S3 Buckets: ' + ', '.join(buckets)
-    }  
+    }
       `),
       handler: 'index.handler',
     });

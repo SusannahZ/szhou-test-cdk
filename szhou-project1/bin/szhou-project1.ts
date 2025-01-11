@@ -2,6 +2,7 @@
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { SzhouProject1Stack } from '../lib/szhou-project1-stack';
+import { CreateS3Buckets } from '../lib/create-s3-buckets';
 
 const app = new cdk.App();
 new SzhouProject1Stack(app, 'SzhouProject1Stack', {
@@ -15,7 +16,11 @@ new SzhouProject1Stack(app, 'SzhouProject1Stack', {
 
   /* Uncomment the next line if you know exactly what Account and Region you
    * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+  env: { account: '992382386705', region: 'us-east-1' },
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+});
+
+new CreateS3Buckets(app, 'CreateS3Buckets', {
+  env: { account: '992382386705', region: 'us-east-1' },
 });

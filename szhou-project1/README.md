@@ -36,7 +36,7 @@ def handler(event, context):
   }
 
 
-
+### below code get to timed out error
 
 import json
 import boto3
@@ -58,3 +58,25 @@ def handler(event, context):
   }
 
 
+
+
+### below code is the good one
+
+
+import time 
+import boto3
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('szhou-table')
+def handler(event, context):
+    s3 = boto3.client('s3')
+    response = s3.list_buckets()
+    buckets = [bucket['Name'] for bucket in response['Buckets']]
+    print("S3 Buckets:", buckets)
+    
+    for bucket in buckets:
+      table.put_item(Item={'BucketName': bucket})
+    
+    return {
+      'statusCode': 200,
+      'body': 'S3 Buckets: ' + ', '.join(buckets)
+    }
