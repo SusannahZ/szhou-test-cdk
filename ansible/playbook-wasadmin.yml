@@ -1,0 +1,15 @@
+---
+- name: Install WAS and create wasadmin user
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create wasadmin user
+      user:
+        name: wasadmin
+        state: present
+        shell: /bin/bash
+
+    - name: Install WebSphere Application Server
+      yum:
+        name: websphere-application-server
+        state: present
