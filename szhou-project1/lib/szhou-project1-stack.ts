@@ -10,6 +10,22 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 
 
 
+/**
+ * Represents the SzhouProject1Stack which extends the AWS CDK Stack.
+ * This stack defines an AWS Lambda function that lists all S3 buckets
+ * and stores their names in a DynamoDB table. The Lambda function is
+ * scheduled to run every 3 minutes using an EventBridge rule.
+ *
+ * Resources created:
+ * - AWS Lambda function (`szhou-sample-function`)
+ * - IAM policies to allow the Lambda function to list S3 buckets and write to DynamoDB
+ * - EventBridge rule to trigger the Lambda function every 3 minutes
+ * - DynamoDB table (`szhou-table`) with a partition key `BucketName`
+ *
+ * @param {Construct} scope - The scope in which this stack is defined
+ * @param {string} id - The scoped construct ID
+ * @param {cdk.StackProps} [props] - Stack properties
+ */
 export class SzhouProject1Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
