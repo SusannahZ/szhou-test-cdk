@@ -1,0 +1,45 @@
+---
+- name: Setup Oracle Client on Windows Server 2022
+  hosts: windows
+  tasks:
+    - name: Create Oracle user
+      win_user:
+        name: oracle
+        password: 'YourPasswordHere'
+        groups:
+          - Administrators
+        state: present
+
+    - name: Download Oracle Client 19c
+      win_get_url:
+        url: 'https://download.oracle.com/otn_software/nt/instantclient/instantclient-basic-windows.x64-19.11.0.0.0dbru.zip'
+        dest: 'C:\\temp\\instantclient-basic-windows.x64-19.11.0.0.0dbru.zip'
+
+    - name: Unzip Oracle Client
+      win_unzip:
+        src: 'C:\\temp\\instantclient-basic-windows.x64-19.11.0.0.0dbru.zip'
+        dest: 'C:\\oracle\\instantclient_19_11'
+        creates: 'C:\\oracle\\instantclient_19_11\\sqlplus.exe'
+
+    - name: Set Oracle environment variables
+      win_environment:
+        state: present
+        name: '{{ item.name }}'
+        value: '{{ item.value }}'
+      with_items:
+        - { name: 'ORACLE_HOME', value: 'C:\\oracle\\instantclient_19_11' }
+        - { name: 'PATH', value: 'C:\\oracle\\instantclient_19_11;%PATH%' }
+
+    - name: Create tnsnames.ora file
+      win_copy:
+        content: |
+          ORCL =
+            (DESCRIPTION =
+              (ADDRESS = (PROTOCOL = TCP)(HOST = your_host)(PORT = 1521))
+              (CONNECT_DATA =
+                (SERVER = DEDICATED)
+                (SERVICE_NAME = your_service_name)
+              )
+            )
+        dest: 'C:\\oracle\\instantclient_19_11\\network\\admin\\tnsnames.ora'
+        force: yes
