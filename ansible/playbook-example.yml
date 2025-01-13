@@ -1,3 +1,10 @@
+# This Ansible playbook sets up the Oracle Client on a Windows Server 2022 machine.
+# It performs the following tasks:
+# 1. Creates an Oracle user with specified password and adds it to the Administrators group.
+# 2. Downloads the Oracle Client 19c zip file from the official Oracle website.
+# 3. Unzips the downloaded Oracle Client zip file to the specified directory.
+# 4. Sets the necessary Oracle environment variables (ORACLE_HOME and PATH).
+# 5. Creates a tnsnames.ora file with the provided Oracle connection details.
 ---
 - name: Setup Oracle Client on Windows Server 2022
   hosts: windows
